@@ -1,8 +1,8 @@
 # Assingments-02
 
-## Tic-tac-toe Game Specification
-
 My 2nd project was in the "Formal Specification and Verification of Programs" course when I was in the 1st semester of my master's at SUT. In this project I formally specified two games, Tic-tac-toc and Pac-Man game.
+
+## Tic-tac-toe Game Specification
 
 | <img src="01.png" alt="Pair Game" width="600"/> | 
 |:--:| 
