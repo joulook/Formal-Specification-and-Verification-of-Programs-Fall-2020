@@ -1,0 +1,880 @@
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/Debian) (preloaded format=xelatex 2021.1.9)  12 FEB 2021 20:49
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**tamirn2.tex
+(./tamirn2.tex
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-07-17>
+(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count164
+\c@section=\count165
+\c@subsection=\count166
+\c@subsubsection=\count167
+\c@paragraph=\count168
+\c@subparagraph=\count169
+\c@figure=\count170
+\c@table=\count171
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+) (./czt.sty
+Package: czt 2015/07/23 v.1.4 Standard Z style file by the Community Z Tools
+
+`Standard Z style file by the Community Z Tools' v.1.4 <2015/07/23>
+Package czt Info: AMS fonts selected with default options on input line 85.
+Package czt Info: Rendering Z math mode in monochrome. on input line 120.
+\c@mv@czt=\count172
+Package czt Info: Creating `czt' math version on input line 151.
+\symstmry=\mathgroup4
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 158.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `czt'
+(Font)                  OT1/cmr/m/n --> TU/lmr/m/n on input line 162.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `czt'
+(Font)                  OT1/cmr/bx/n --> TU/lmr/bx/n on input line 163.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `czt'
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 164.
+\symitalics=\mathgroup5
+Package czt Info: Loading AMS font symbols for Z on input line 602.
+\symAMSa=\mathgroup6
+\symAMSb=\mathgroup7
+Package czt Info: Current math version set to `czt' on input line 605.
+
+
+Package czt Warning: Could not resolve math code for letters.
+(czt)                Default could not be found. Using Italics on input line 66
+4.
+
+Package czt Info: Counting Z declarations? YES  on input line 682.
+\@zcountingwhat=\count173
+\c@cntZunboxed=\count174
+\c@cntZaxdef=\count175
+\c@cntZgendef=\count176
+\c@cntZschema=\count177
+\c@cntZgenschema=\count178
+\c@cntZtheorem=\count179
+\c@cntZproof=\count180
+\c@cntZdecl=\count181
+\c@cntZunknown=\count182
+\c@cntZtotunboxed=\count183
+\c@cntZtotaxdef=\count184
+\c@cntZtotgendef=\count185
+\c@cntZtotschema=\count186
+\c@cntZtotgenschema=\count187
+\c@cntZtottheorem=\count188
+\c@cntZtotproof=\count189
+\c@cntZtotdecl=\count190
+\c@cntZtotunknown=\count191
+\big@size=\dimen135
+\zedtab=\dimen136
+\zedindent=\dimen137
+\zedleftsep=\dimen138
+\zedbar=\dimen139
+\interzedlinepenalty=\count192
+\preboxpenalty=\count193
+\forcepagepenalty=\count194
+\zedskip=\skip49
+Package czt Info: Initialising Z registers with default values.
+(czt)                \zedtab=20.0pt
+(czt)                \zedindent=25.0pt=\leftmargini
+(czt)                \zedleftsep=10.0pt
+(czt)                \zedbar=60.0pt
+(czt)             
+(czt)                \interzedlinepenalty=10000
+(czt)                \preboxpenalty=0
+(czt)                \forcepagepenalty=-10000
+(czt)                \interdisplaylinepenalty=100
+(czt)             
+(czt)                \zedskip=6.0pt plus 3.99994pt minus 3.99994pt
+(czt)                \zt@p=false 
+(czt)                \CountDefstrue=true  on input line 1092.
+Package czt Info: Setting up Standard Z skipping and breaking on input line 112
+8.
+Package czt Info: Setting up Standard Z LaTeX environments on input line 1425.
+Package czt Info: Setting up Standard Z basic symbols on input line 1540.
+Package czt Info: Setting up Standard Z Greek and other letters on input line 1
+604.
+Package czt Info: Setting up Standard Z bracket symbols on input line 1651.
+Package czt Info: Marking \mid, \semicolon, and \spot
+(czt)             as 
+(czt)             active in math mode on input line 1655.
+Package czt Info: Setting up Standard Z predicate logic symbols on input line 1
+698.
+Package czt Info: Setting up Standard Z keywords on input line 1762.
+Package czt Info:   Loading prelude          symbols on input line 1772.
+Package czt Info:   Loading set      toolkit symbols on input line 1804.
+Package czt Info:   Loading relation toolkit symbols on input line 1830.
+Package czt Info:   Loading function toolkit symbols on input line 1845.
+Package czt Info:   Loading number   toolkit symbols on input line 1861.
+Package czt Info:   Loading sequence toolkit symbols on input line 1889.
+Package czt Info:   Loading standard toolkit symbols completed on input line 18
+93.
+Package czt Info:   Loading Z state refinement toolkit symbols completed on inp
+ut line 1904.
+) (/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/xepersian.sty
+Package: xepersian 2020/05/17 v23.1 Persian typesetting in XeLaTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2020-07-17 L3 programming layer (loader) 
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-xdvipdfmx.def
+File: l3backend-xdvipdfmx.def 2020-06-29 L3 backend support: xdvipdfmx
+\g__graphics_track_int=\count195
+\l__pdf_internal_box=\box45
+\g__pdf_backend_object_int=\count196
+\g__pdf_backend_annotation_int=\count197
+))
+Package: xparse 2020-05-15 L3 Experimental document command parser
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse-generic.tex
+\l__xparse_current_arg_int=\count198
+\g__xparse_grabber_int=\count199
+\l__xparse_m_args_int=\count266
+\l__xparse_v_nesting_int=\count267
+))
+Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTe
+X
+\l__fontspec_script_int=\count268
+\l__fontspec_language_int=\count269
+\l__fontspec_strnum_int=\count270
+\l__fontspec_tmp_int=\count271
+\l__fontspec_tmpa_int=\count272
+\l__fontspec_tmpb_int=\count273
+\l__fontspec_tmpc_int=\count274
+\l__fontspec_em_int=\count275
+\l__fontspec_emdef_int=\count276
+\l__fontspec_strong_int=\count277
+\l__fontspec_strongdef_int=\count278
+\l__fontspec_tmpa_dim=\dimen140
+\l__fontspec_tmpb_dim=\dimen141
+\l__fontspec_tmpc_dim=\dimen142
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+(/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/xepersian-persiancal.sty
+Package: xepersian-persiancal 2012/07/25 v0.2 provides Persian calendar
+\XePersian@i=\count279
+\XePersian@y=\count280
+\XePersian@m=\count281
+\XePersian@d=\count282
+\XePersian@latini=\count283
+\XePersian@persiani=\count284
+\XePersian@latinii=\count285
+\XePersian@persianii=\count286
+\XePersian@latiniii=\count287
+\XePersian@persianiii=\count288
+\XePersian@latiniv=\count289
+\XePersian@persianiv=\count290
+\XePersian@latinv=\count291
+\XePersian@persianv=\count292
+\XePersian@latinvi=\count293
+\XePersian@persianvi=\count294
+\XePersian@latinvii=\count295
+\XePersian@persianvii=\count296
+\XePersian@latinviii=\count297
+\XePersian@persianviii=\count298
+\XePersian@latinix=\count299
+\XePersian@persianix=\count300
+\XePersian@latinx=\count301
+\XePersian@persianx=\count302
+\XePersian@latinxi=\count303
+\XePersian@persianxi=\count304
+\XePersian@latinxii=\count305
+\XePersian@persianxii=\count306
+\XePersian@persianxiii=\count307
+\XePersian@temp=\count308
+\XePersian@temptwo=\count309
+\XePersian@tempthree=\count310
+\XePersian@yModHundred=\count311
+\XePersian@thirtytwo=\count312
+\XePersian@dn=\count313
+\XePersian@sn=\count314
+\XePersian@mminusone=\count315
+)
+(/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/xepersian-mathsdigitspec.s
+ty
+Package: xepersian-mathsdigitspec 2018/12/16 v1.1.7 Unicode Persian maths digit
+s in XeLaTeX
+) (/usr/share/texlive/texmf-dist/tex/xelatex/bidi/bidi.sty
+Package: bidi 2020/05/17 v36.3 Bidirectional typesetting in plain TeX and LaTeX
+
+
+****************************************************
+* 
+* bidi package (Bidirectional typesetting in
+* plain TeX and LaTeX, using XeTeX engine)
+* 
+* Description: A convenient interface for
+* typesetting bidirectional texts in plain TeX
+* and LaTeX. The package includes adaptations
+* for use with many other commonly-used packages.
+* 
+* Copyright (c) 2007--2020 Vafa Khalighi
+* Copyright (c) 2018--2020 bidi-tex GitHub organization
+* 
+* v36.3, 2020/05/17
+* 
+* License: LaTeX Project Public License, version
+* 1.3c or higher (your choice)
+* 
+* Location on CTAN: /macros/xetex/latex/bidi
+* 
+* Issue tracker: https://github.com/persiantex/bidi/issues
+* 
+* Primary author of bidi package: Vafa Khalighi.
+* 
+****************************************************
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+(/usr/share/texlive/texmf-dist/tex/xelatex/bidi/biditools.sty
+Package: biditools 2020/05/13 v2 Programming tools for bidi package
+\@bidi@envbody=\toks15
+\@bidi@emptytoks=\toks16
+\bidi@poscount=\count316
+\bidi@tempcountb=\count317
+\bidi@temptoksa=\toks17
+\bidi@temptoksb=\toks18
+\bidi@dummies=\count318
+\bidi@are@these@correct=\toks19
+\bidi@toks@lista=\toks20
+\bidi@toks@listb=\toks21
+\bidi@stack@length=\count319
+\bidi@empty@stack=\toks22
+\bidi@looprepeat@depth=\count320
+)
+(/usr/share/texlive/texmf-dist/tex/latex/zref/zref-abspage.sty
+Package: zref-abspage 2020-05-28 v2.31 Module abspage for zref (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/zref/zref-base.sty
+Package: zref-base 2020-05-28 v2.31 Module base for zref (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+Package zref Info: New property list: main on input line 763.
+Package zref Info: New property: default on input line 764.
+Package zref Info: New property: page on input line 765.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/atbegshi/atbegshi.sty
+Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+)
+\c@abspage=\count321
+Package zref Info: New property: abspage on input line 66.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks23
+\XKV@tempa@toks=\toks24
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count322
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\@bidi@copyins@=\insert252
+
+(/usr/share/texlive/texmf-dist/tex/xelatex/bidi/latex-xetex-bidi.def
+File: latex-xetex-bidi.def 2019/03/03 v1.3.7 bidi adaptations for `latex.ltx' f
+or XeTeX engine
+\bidi@n@everypar=\toks25
+\bidi@column@check@number=\count323
+
+(/usr/share/texlive/texmf-dist/tex/xelatex/bidi/footnote-xetex-bidi.def
+File: footnote-xetex-bidi.def 2017/08/09 v1.1 bidi footnote macros for XeTeX en
+gine
+\c@footdir@label=\count324
+\footdir@toks=\toks26
+)
+(/usr/share/texlive/texmf-dist/tex/xelatex/bidi/article-xetex-bidi.def
+File: article-xetex-bidi.def 2017/06/09 v0.6 bidi adaptations for standard arti
+cle class for XeTeX engine
+))
+(/usr/share/texlive/texmf-dist/tex/xelatex/bidi/loadingorder-xetex-bidi.def
+File: loadingorder-xetex-bidi.def 2017/12/29 v0.97 making sure that bidi is the
+ last package loaded
+)
+\bidi@digits=\count325
+\bidi@digits@charclass=\XeTeXcharclass1
+\bidi@sepmark@charclass=\XeTeXcharclass2
+)
+****************************************************
+* 
+* xepersian package (Persian for LaTeX, using XeTeX engine)
+* 
+* Description: The package supports Persian
+* typesetting, using fonts provided in the
+* distribution.
+* 
+* Copyright (c) 2008--2020 Vafa Khalighi
+* Copyright (c) 2018--2020 bidi-tex GitHub Organization
+* 
+* v23.1, 2020/05/17
+* 
+* License: LaTeX Project Public License, version
+* 1.3c or higher (your choice)
+* 
+* Location on CTAN: /macros/xetex/latex/xepersian
+* 
+* Issue tracker: https://github.com/persiantex/xepersian/issues
+* 
+* Primary author of xepersian package: Vafa Khalighi.
+* 
+****************************************************
+\xepersian@tcl=\count326
+\xepersian@ilg=\dimen143
+\xepersian@strutilg=\dimen144
+
+(/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/loadingorder-xepersian.def
+File: loadingorder-xepersian.def 2018/09/29 v0.5 making sure that xepersian is 
+the last package loaded
+) (/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/footnote-xepersian.def
+File: footnote-xepersian.def 2017/08/09 v0.6 footnote macros for xepersian pack
+age
+)
+(/usr/share/texlive/texmf-dist/tex/xelatex/xepersian/article-xepersian.def
+File: article-xepersian.def 2010/07/25 v0.2 adaptations for standard article cl
+ass
+)
+
+Package fontspec Info: Font family 'lmroman10-regular(0)' created for font
+(fontspec)             'lmroman10-regular' with options
+(fontspec)             [Ligatures=TeX,Path,BoldFont={lmroman10-bold},BoldItalic
+Font={lmroman10-bolditalic},ItalicFont={lmroman10-italic},SmallCapsFont={lmroma
+ncaps10-regular},SlantedFont={lmromanslant10-regular},BoldSlantedFont={lmromans
+lant10-bold}].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->"[lmroman10-regular]/OT:script=latn;language=dflt;map
+ping=tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+(fontspec)             - 'bold' (b/n) with NFSS spec.:
+(fontspec)             <->"[lmroman10-bold]/OT:script=latn;language=dflt;mappin
+g=tex-text;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+(fontspec)             - 'italic' (m/it) with NFSS spec.:
+(fontspec)             <->"[lmroman10-italic]/OT:script=latn;language=dflt;mapp
+ing=tex-text;"
+(fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+(fontspec)             - 'slanted' (m/sl) with NFSS spec.:
+(fontspec)             <->"[lmromanslant10-regular]/OT:script=latn;language=dfl
+t;mapping=tex-text;"
+(fontspec)             - 'slanted small caps'  (m/scsl) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+(fontspec)             - 'bold italic' (b/it) with NFSS spec.:
+(fontspec)             <->"[lmroman10-bolditalic]/OT:script=latn;language=dflt;
+mapping=tex-text;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+(fontspec)             - 'bold slanted' (b/sl) with NFSS spec.:
+(fontspec)             <->"[lmromanslant10-bold]/OT:script=latn;language=dflt;m
+apping=tex-text;"
+(fontspec)             - 'bold slanted small caps'  (b/scsl) with NFSS spec.:
+(fontspec)             <->"[lmromancaps10-regular]/OT:script=latn;language=dflt
+;mapping=tex-text;"
+
+)
+
+Package fontspec Info: Font family 'BZAR.TTF(0)' created for font 'BZAR.TTF'
+(fontspec)             with options
+(fontspec)             [Script=Persian,Ligatures=PersianTeX,Scale=1.2].
+(fontspec)              
+(fontspec)              This font family consists of the following NFSS
+(fontspec)             series/shapes:
+(fontspec)              
+(fontspec)             - 'normal' (m/n) with NFSS spec.:
+(fontspec)             <->s*[1.2]"[BZAR.TTF]/OT:script=arab;language=dflt;mappi
+ng=persian-tex-text;"
+(fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
+
+LaTeX Font Info:    Font shape `TU/BZAR.TTF(0)/m/n' will be
+(Font)              scaled to size 11.99997pt on input line 6.
+
+(./tamirn2.aux)
+\openout1 = `tamirn2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+2.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+\AtBeginShipoutBox=\box46
+LaTeX Font Info:    Font shape `TU/BZAR.TTF(0)/m/n' will be
+(Font)              scaled to size 20.73593pt on input line 14.
+LaTeX Font Info:    Font shape `TU/BZAR.TTF(0)/m/n' will be
+(Font)              scaled to size 14.39996pt on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 14.
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 1
+4.
+
+(/usr/share/texlive/texmf-dist/tex/latex/stmaryrd/Ustmry.fd)
+LaTeX Font Info:    Trying to load font information for U+msa on input line 14.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 14.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `TU/BZAR.TTF(0)/m/n' will be
+(Font)              scaled to size 17.27994pt on input line 16.
+
+
+LaTeX Font Warning: Font shape `TU/BZAR.TTF(0)/b/n' undefined
+(Font)              using `TU/BZAR.TTF(0)/m/n' instead on input line 16.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--23
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--23
+[][]
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 24.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 24.
+
+Package czt Warning: Counting unboxed  on input line 24.
+
+
+Package czt Warning: Counting unboxed  on input line 25.
+
+
+Package czt Warning: Counting unboxed  on input line 26.
+
+
+Package czt Warning: Counting unboxed  on input line 27.
+
+
+Package czt Warning: Counting unboxed  on input line 28.
+
+
+Package czt Warning: Counting unboxed  on input line 29.
+
+
+Package czt Warning: Counting unboxed  on input line 30.
+
+
+Package czt Warning: Counting unboxed  on input line 31.
+
+
+Package czt Warning: Counting unboxed  on input line 32.
+
+
+Package czt Warning: Counting unboxed  on input line 33.
+
+
+Package czt Warning: Counting unboxed  on input line 34.
+
+
+Package czt Warning: Counting unboxed  on input line 35.
+
+
+Overfull \hbox (97.50166pt too wide) in alignment at lines 24--37
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--43
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--43
+[][]
+ []
+
+[1
+
+]
+
+Package czt Warning: Counting schema  on input line 43.
+
+
+Package czt Warning: Counting schema  on input line 55.
+
+
+Package czt Warning: Counting schema  on input line 62.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--83
+[][]
+ []
+
+[2]
+
+Package czt Warning: Counting schema  on input line 85.
+
+
+Package czt Warning: Counting schema  on input line 96.
+
+
+Package czt Warning: Counting schema  on input line 106.
+
+
+Package czt Warning: Counting schema  on input line 114.
+
+[3]
+
+Package czt Warning: Counting schema  on input line 126.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--142
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--142
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--142
+[][]
+ []
+
+LaTeX Font Info:    Font shape `TU/BZAR.TTF(0)/b/n' will be
+(Font)              scaled to size 17.27994pt on input line 142.
+
+Package czt Warning: Counting schema  on input line 145.
+
+
+Overfull \hbox (20.55104pt too wide) in alignment at lines 145--158
+[] 
+ []
+
+[4]
+
+Package czt Warning: Counting schema  on input line 161.
+
+
+Package czt Warning: Counting schema  on input line 169.
+
+
+Overfull \hbox (40.55104pt too wide) in alignment at lines 169--174
+[] 
+ []
+
+
+Package czt Warning: Counting schema  on input line 177.
+
+
+Package czt Warning: Counting unboxed  on input line 182.
+
+
+Overfull \hbox (22.84529pt too wide) in alignment at lines 182--184
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--187
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--187
+[][]
+ []
+
+
+Package czt Warning: Counting schema  on input line 191.
+
+[5]
+
+Package czt Warning: Counting schema  on input line 208.
+
+
+Package czt Warning: Counting schema  on input line 214.
+
+
+Package czt Warning: Counting schema  on input line 222.
+
+
+Package czt Warning: Counting unboxed  on input line 227.
+
+
+Overfull \hbox (28.5753pt too wide) in alignment at lines 227--229
+[] 
+ []
+
+[6]
+
+Package czt Warning: Counting schema  on input line 236.
+
+
+Package czt Warning: Counting schema  on input line 254.
+
+
+Package czt Warning: Counting schema  on input line 264.
+
+
+Package czt Warning: Counting schema  on input line 270.
+
+
+Package czt Warning: Counting unboxed  on input line 275.
+
+[7]
+
+Package czt Warning: Counting schema  on input line 283.
+
+
+Overfull \hbox (73.64725pt too wide) in alignment at lines 283--308
+[] 
+ []
+
+
+Package czt Warning: Counting schema  on input line 311.
+
+
+Overfull \hbox (97.53613pt too wide) in alignment at lines 311--327
+[] 
+ []
+
+[8]
+
+Package czt Warning: Counting schema  on input line 330.
+
+
+Package czt Warning: Counting schema  on input line 336.
+
+
+Package czt Warning: Counting unboxed  on input line 341.
+
+
+Overfull \hbox (4.5553pt too wide) in alignment at lines 341--343
+[] 
+ []
+
+
+Package czt Warning: Counting schema  on input line 349.
+
+
+Overfull \hbox (73.64725pt too wide) in alignment at lines 349--383
+[] 
+ []
+
+[9]
+
+Package czt Warning: Counting schema  on input line 386.
+
+
+Overfull \hbox (97.53613pt too wide) in alignment at lines 386--408
+[] 
+ []
+
+[10]
+
+Package czt Warning: Counting schema  on input line 411.
+
+
+Package czt Warning: Counting schema  on input line 417.
+
+
+Package czt Warning: Counting unboxed  on input line 422.
+
+
+Package czt Warning: Counting schema  on input line 429.
+
+
+Overfull \hbox (73.64725pt too wide) in alignment at lines 429--463
+[] 
+ []
+
+[11]
+
+Package czt Warning: Counting schema  on input line 466.
+
+
+Overfull \hbox (97.53613pt too wide) in alignment at lines 466--488
+[] 
+ []
+
+[12]
+
+Package czt Warning: Counting schema  on input line 491.
+
+
+Package czt Warning: Counting schema  on input line 497.
+
+
+Package czt Warning: Counting unboxed  on input line 502.
+
+
+Package czt Warning: Counting schema  on input line 510.
+
+
+Overfull \hbox (32.13185pt too wide) in alignment at lines 510--516
+[] 
+ []
+
+[13]
+
+Package czt Warning: Counting schema  on input line 519.
+
+
+Package czt Warning: Counting schema  on input line 530.
+
+
+Package czt Warning: Counting schema  on input line 546.
+
+
+Package czt Warning: Counting schema  on input line 552.
+
+[14]
+
+Package czt Warning: Counting schema  on input line 560.
+
+
+Package czt Warning: Counting unboxed  on input line 565.
+
+
+Overfull \hbox (65.02528pt too wide) in alignment at lines 565--567
+[] 
+ []
+
+
+Package czt Warning: Counting schema  on input line 573.
+
+
+Package czt Warning: Counting schema  on input line 596.
+
+[15]
+
+Package czt Warning: Counting schema  on input line 611.
+
+
+Package czt Warning: Counting schema  on input line 617.
+
+
+Package czt Warning: Counting unboxed  on input line 622.
+
+
+Package czt Warning: Counting schema  on input line 630.
+
+
+Package czt Warning: Counting schema  on input line 638.
+
+[16] [17] (./tamirn2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 6203 strings out of 479712
+ 156641 string characters out of 5891448
+ 499735 words of memory out of 5000000
+ 23315 multiletter control sequences out of 15000+600000
+ 541752 words of font info for 84 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 61i,11n,74p,1095b,281s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on tamirn2.pdf (17 pages).

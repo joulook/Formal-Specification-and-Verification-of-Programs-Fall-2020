@@ -1,0 +1,49 @@
+\contentsline {section}{\numberline {1}Introduction}{3}%
+\contentsline {subsection}{\numberline {1.1}Design decisions}{4}%
+\contentsline {subsection}{\numberline {1.2}\texttt {czt.sty}{} package options and few useful commands}{4}%
+\contentsline {subsection}{\numberline {1.3}Background}{5}%
+\contentsline {subsection}{\numberline {1.4}Document structure}{6}%
+\contentsline {section}{\numberline {2}Digit}{6}%
+\contentsline {section}{\numberline {3}Letters}{6}%
+\contentsline {subsection}{\numberline {3.1}Latin}{7}%
+\contentsline {subsection}{\numberline {3.2}Greek}{7}%
+\contentsline {subsection}{\numberline {3.3}Other letter}{7}%
+\contentsline {section}{\numberline {4}Special}{8}%
+\contentsline {subsection}{\numberline {4.1}Stroke characters}{8}%
+\contentsline {subsection}{\numberline {4.2}Word glues}{9}%
+\contentsline {subsection}{\numberline {4.3}Brackets}{9}%
+\contentsline {subsection}{\numberline {4.4}Box drawing characters}{9}%
+\contentsline {subsection}{\numberline {4.5}Other special characters}{10}%
+\contentsline {section}{\numberline {5}Symbols}{12}%
+\contentsline {subsection}{\numberline {5.1}Core symbols}{13}%
+\contentsline {subsection}{\numberline {5.2}Toolkit symbols}{14}%
+\contentsline {subsubsection}{\numberline {5.2.1}\texttt {prelude.tex}{} and Z keywords}{14}%
+\contentsline {subsubsection}{\numberline {5.2.2}\texttt {set\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{17}%
+\contentsline {subsubsection}{\numberline {5.2.3}\texttt {relation\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{17}%
+\contentsline {subsubsection}{\numberline {5.2.4}\texttt {function\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{19}%
+\contentsline {subsubsection}{\numberline {5.2.5}\texttt {number\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{19}%
+\contentsline {subsubsection}{\numberline {5.2.6}\texttt {sequence\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{21}%
+\contentsline {subsubsection}{\numberline {5.2.7}\texttt {standard\unhbox \voidb@x \kern 0.06em\vbox {\hrule width0.5em}toolkit.tex}}{22}%
+\contentsline {section}{\numberline {6}Z-\LaTeX {} environments}{22}%
+\contentsline {section}{\numberline {7}Controlling definition counting}{27}%
+\contentsline {section}{\numberline {8}Extra macros and commands from \texttt {czt.sty}}{30}%
+\contentsline {section}{\numberline {9}Conclusions and acknowledgements}{30}%
+\contentsline {section}{\numberline {10}Features left out}{32}%
+\contentsline {section}{\numberline {A}Reference card}{34}%
+\contentsline {subsection}{\numberline {A.1}Letters}{34}%
+\contentsline {subsubsection}{Special Greek}{34}%
+\contentsline {subsubsection}{Small Greek}{34}%
+\contentsline {subsubsection}{Capital Greek}{34}%
+\contentsline {subsection}{\numberline {A.2}Special Z characters}{34}%
+\contentsline {subsubsection}{Stroke chars}{34}%
+\contentsline {subsubsection}{Brackets}{34}%
+\contentsline {subsubsection}{Spacing}{34}%
+\contentsline {subsection}{\numberline {A.3}Z Notation}{35}%
+\contentsline {subsubsection}{Logic}{35}%
+\contentsline {subsubsection}{Z keywords}{35}%
+\contentsline {subsection}{\numberline {A.4}Mathematical toolkits}{35}%
+\contentsline {subsubsection}{Set toolkit}{35}%
+\contentsline {subsubsection}{Relation toolkit}{35}%
+\contentsline {subsubsection}{Function toolkit}{36}%
+\contentsline {subsubsection}{Number toolkit}{36}%
+\contentsline {subsubsection}{Sequence toolkit}{36}%

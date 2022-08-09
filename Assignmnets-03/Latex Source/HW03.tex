@@ -1,0 +1,646 @@
+\documentclass{article}
+\usepackage{czt} 
+\usepackage{xepersian}  
+\newcommand{\sectionbreak}{\clearpage}
+\settextfont[Scale=1.2]{BZAR.TTF}
+
+\title{\lr{Formal Specification and Verification of Programs}}
+\author{\lr{3rd Assignment Solutions}\\
+\lr{Mohammad Hossein Khoshechin - 99210164}\\
+\lr{Group 2}}
+
+\begin{document}
+
+\maketitle
+
+\section*{توصیف فرمال سیستم \lr{SnappDoctor}}
+
+پروژه اینجانب توصیف رسمی سیستم اسنپ دکتر بود و توصیف صورت گرفته نشأت گرفته از امکانات این سیستم می باشد. در این سیستم هر پزشک می تواند ثبت نام کند و سرویس دهد. هر مشتری نیز می تواند ثبت نام کند و از پزشکان به صورت تماس آنلاین و یا چت آنلاین مشاوره بگیرد و یا یک نوبتی را رزرو کند و در آن زمان دکتر با او تماس بگیرد . علاوه بر آن هر داروخانه میتواند در این سیستم ثبت نام کند و سرویس دهد و هر مشتری ای که نسخه دکتر داشته باشد میتواند داروهایش را به صورت آنلاین تهییه کند.
+\\
+\\
+\\
+در این بخش \lr{free type} و \lr{given type} های مورد نیاز برای توصیف نوشته شده اند.
+
+\begin{zed}
+[Name]\\
+[Major]\\
+[Description]\\
+[Prescription]\\
+[BusinessLicense]\\
+[Drug]\\
+Day == sunday|monday|tuesday|wednesday | thursday|friday|saturday\\
+Gender == male|female\\
+Response == Doctor Registered | Medical System ID is Not Valid | Phone Number is Not Valid|\\
+\t1 Patient Registered | Balance Charged | Invalid Charge | Call Reserved | Faild Reserve | \\
+\t1 Call Made | Invalid Call | Text Made | Invalid Text | Pharmacy Registered | License  is Not Valid|\\
+\t1 Purchase Made | Purchase Faild
+\end{zed}
+\\
+\\
+\\
+در این قسمت یک سری شما به عنوان تایپ تعریف شده اند از قبیل \lr{Schedule} که نشان میدهد در یک روز از هفته چه ساعتی و تا چه ساعتی مشخص شده است. کارت اعتباری که مشتری جهت پرداخت از آن استفاده می کند . تایپ \lr{Date} که برای ثبت تاریخ یک روز مورد استفاده قرار میگیرد.
+\begin{schema}{Schedule}
+day : Day\\
+from : \nat \cross \nat\\
+to : \nat \cross \nat
+\where
+from.1 \ge 0 \land from.1 \le 23\\
+from.2 \ge 0 \land from.2 \le 59\\
+to.1 \ge 0 \land to.1 \le 23\\
+to.2 \ge 0 \land to.2 \le 59\\
+(from.1 \le to.1)\lor(from.1 = to.1 \land from.2 \le to.2)
+\end{schema}
+
+\begin{schema}{CreditCard}
+cardId : \nat\\
+pinCode : \nat\\
+cvv2 : \nat\\
+expireDate : Date
+\end{schema}
+
+\begin{schema}{Date}
+year : \nat\\
+mounth : \nat\\
+day : \nat
+\where
+year \ge 1300 \land year \le 1399\\
+mounth \le 12\\
+day \le 31\\
+mounth \le 6 \implies day \le 31\\
+mounth \ge 7 \land mounth \neq 12 \implies day \le 30\\
+mounth = 12 \implies  day \le 29
+\end{schema}
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+در این قسمت تایپ دکتر نوشته شده است که دارای صفات نام و نام خانوادگی و شماره نظام پزشکی و تخصص اش است. صفت دیگری که دارد یک برنامه زمانی در هفته است که نشان میدهد در هر روز از هفته چه ساعاتی در دسترس است. دو صفت هم در نظر گرفته شده برای اینکه در هر دقیقت تماس تلفنی و یا تماس نوشتاری چه مبلغی دریافت می کند.
+
+\begin{schema}{Doctor}
+firstName : Name\\
+lastName : Name\\
+medicalSystemID : \nat\\
+major : Major\\
+schedules : \power~Schedule\\
+textPerMin : \nat\\
+callPerMin : \nat
+\end{schema}
+
+در این قسمت تایپ بیمار توصیف شده است . که دارای نام و نام خانوادگی است . سن و جنیست و آدرس و تلفنش را نیز در نظر میگیریم
+\begin{schema}{Patient}
+firstName : Name\\
+lastName : Name\\
+age : \nat\\
+gender : Gender\\
+address : Description\\
+phoneNum : \nat
+\end{schema}
+
+در این قسمت تایپ داروخانه را توصیف کرده ایم که دارای نام و جواز کسب و داروهایی است که دارد. اینطور فرض کردیم که قیمت تمام داروها یکسان است.
+\begin{schema}{Pharmacy}
+name : Name\\
+license : BusinessLicense\\
+drugs : \power~ Drug\\
+pricePerDrug : \nat
+\end{schema}
+
+در این بخش شمای حالت را مینویسم. سیستم اسنپ مشخصات همه بیماران و دکترها و داروخانه ها را ذخیره میکند. هر بیمار یک وضعیتی دارد نسبت به سلامت جسمانی و روانی خود که آن هم باید ذخیره شود و هربار که بیمار درخوست پزشک میکند باید توسط خود بیمار آپدیت شود. در این سیستم هر شخص بر اساس پولی که به حساب اسنپ میریزد یک موجودی ای دارد که آن هم ذخیره می شود . هر بیمار زمانی که یک دکتر را برای تماس تلفنی رزرو میکند نیز باید اطلاعاتش ذخیره شود . علاوه بر این ها مشخصات تماس بیمار با دکتر و تماس تایپی بیمار با دکتر نیز باید ذخیره شود. 
+\begin{schema}{SnappDoctor}
+doctors : \power~Doctor\\
+patients : \power~Patient\\
+pharmacies : \power~ Pharmacy\\
+callReserve : Patient \fun \power(Date \cross Schedule \cross Doctor)\\
+calledDoctor : Patient \fun \power(Date \cross Schedule \cross Doctor)\\
+textDoctor : Patient \fun \power(Date \cross Schedule \cross Doctor)\\
+balance : Patient \fun \nat\\
+status : Patient \fun Description
+\end{schema}
+
+در این بخش مقداردهی اولیه شمای حالت را توصیف می کنیم.
+\begin{schema}{SnappDoctorInit}
+SnappDoctor'
+\where
+doctors' = \emptyset\\
+patients' = \emptyset\\
+callReserve' = \emptyset\\
+calledDoctor' = \emptyset\\
+textDoctor' = \emptyset\\
+balance' = \emptyset\\
+status' = \emptyset
+pharmacies' = \emptyset
+\end{schema}
+
+در ادامه شما های عملیات هایمان را می نویسیم.
+\\
+\\
+\\
+\section*{1}
+در این بخش ثبت نام پزشک در سیستم را توصیف میکنیم. ابتدا باید شماره نظام پزشکی اش چک شود که چون این عملیات توسط یک \lr{third party} انجام می شود ما یک تابع به صورت پیشفرض در نظر گرفتیم به نام \lr{checkID} که با دادن شماره نظام پزشکی دکتر به آن صحتش بررسی می شود اگر معتبر باشد مقدار \lr{true} و اگر نامعتبر باشد مقدار \lr{false} برمیگرداند.هیچ دو پزشکی نیز نباید شماره نظام پزشکی شان با هم برابر باشد.
+\begin{schema}{RegisterDoctor}
+\Delta SnappDoctor\\
+d? : Doctor
+\where
+checkID(d?.medicalSystemID)\\
+\forall d:Doctor | d \in doctors @ d.medicalSystemID \neq d?.medicalSystemID\\
+doctors' = doctors \cup d?\\
+patients' = patients\\ 
+callReserve'= callReserve\\
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor
+balance' = balance\\
+status' = status\\
+pharmacies' = pharmacies  
+\end{schema}
+
+\begin{schema}{Success_0}
+r! : Response
+\where
+r! = Doctor Registered
+\end{schema}
+
+
+
+\begin{schema}{DoctorNotValid}
+\Xi SnappDoctor\\
+d? : Doctor
+\where
+\neg checkID(d?.medicalSystemID) \lor\\ 
+\t1 \exists d: Doctor | d \in doctors @ d.medicalSystemID = d?.medicalSystemID
+\end{schema}
+
+\begin{schema}{Failure_0}
+r! : Response
+\where
+r! = Medical System ID is Not Valid
+\end{schema}
+
+\begin{zed}
+SignUpDoctor == (RegisterDoctor \land Success_0) \lor (DoctorNotValid \land Failure_0)
+\end{zed}
+\\
+\\
+\section*{2}
+
+در این بخش ثبت نام بیمار را توصیف کرده ایم . شماره موبایل آن هم باید توسط یک پیامک چک شود که چون این کار توسط یک \lr{third party} انجام میشود ما هم از یک تابع پیشفرض با نام \lr{checkPhoneNum} جهت اعتبار سنجی تلفن او استفاده کردیم. شماره تلفن هیچ دو بیماری نباید با هم برابر باشد.
+\begin{schema}{RegisterPatient}
+\Delta SnappDoctor\\
+p? : Patient\\
+s? : Description
+\where
+checkPhoneNum(p?.phoneNum)\\
+\forall p: Patient | p \in patients @ p.phonNum \neq p?.phoneNum\\
+patients' = patients \cup p?\\
+doctors' = doctors\\ 
+callReserve'= callReserve\\
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor\\
+balance' = balance \cup \{p? \mapsto 0\}\\
+status' = status \cup \{p? \mapsto s?\}\\
+pharmacies' = pharmacies 
+\end{schema}
+
+\begin{schema}{Success_1}
+r! : Response
+\where
+r! = Patient Registered
+\end{schema}
+
+\begin{schema}{PatientNotValid}
+\Xi SnappDoctor\\
+p? : Patient
+\where
+\neg checkPhoneNum(p?.phoneNum) \lor\\ 
+\t1 \exists p: Patient | p \in patients @ p.phoneNum = p?.phoneNum
+\end{schema}
+
+\begin{schema}{Failure_1}
+r! : Response
+\where
+r! = Phone Number is Not Valid
+\end{schema}
+
+\begin{zed}
+SignUpPatient == (RegisterPatient \land Success_1) \lor (PatientNotValid \land Failure_1)
+\end{zed}
+
+\section*{3}
+
+در این بخش عملیات افزایش اعتبار توسط بیمار را توصیف میکنیم. هر شخص توسط کارت اعتباری اش مبلغی را به اعتبارش اضافه میکند. چون عملیات برداشت پول توسط بانک انجام می شود بنابراین ما هم از یک تابع پیشفرض به نام  \lr{transaction} جهت انجام عملیات بانکی استفاده میکنیم . اگر عملیات موفقیت آمیز باشد مقدار  \lr{true} در غیر این صورت مقدار  \lr{false} را بر میگرداند.
+
+\begin{schema}{ChargeBalance}
+\Delta SnappDoctor\\
+p? : Patient\\
+m? : \nat\\
+c? : CreditCard
+\where
+p? \in patients\\
+transaction(c?,m?)\\
+balance' = balance \oplus \{p? \mapsto (balance(p?)+m?)\}\\
+patients' = patients\\ 
+callReserve'= callReserve\\
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor\\
+doctors' = doctors\\
+status' = status\\
+pharmacies' = pharmacies
+\end{schema}
+
+\begin{schema}{InvalidCharge}
+\Xi SnappDoctor\\
+p? : Patient\\
+m? : \nat\\
+c? : CreditCard
+\where
+\neg transaction(c?,m?)\\
+p? \notin patients
+\end{schema}
+
+\begin{schema}{Success_2}
+r! : Response
+\where
+r! = Balance Charged
+\end{schema}
+
+\begin{schema}{Failure_2}
+r! : Response
+\where
+r! = Invalid Charge
+\end{schema}
+
+\begin{zed}
+Charge == (ChargeBalance \land Success_2) \lor (InvalidCharge \land Failure_2)
+\end{zed}
+
+\section*{4}
+
+در این بخش عملیات رزرو تماس با دکتر توسط بیمار را توصیف میکنیم . اولا باید بیمار در اعتبارش برای هزینه تماسش با دکتر پول داشته باشد . دوما نباید در آن تایم و تاریخی که یک فرد میخواهد با دکتر رزرو کند کسی دیگر رزرو کرده باشد. هزینه رزرو تماس هم باید در پایان از اعتبار بیمار کسر شود.
+\begin{schema}{SubmitReserve}
+\Delta SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+p? \in patients\\
+d? \in doctors\\
+\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to\\
+\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+callReserve'= callReserve \oplus \{p? \mapsto \{callReserve(p) \cup \{(t?,s?,d?)\} \}\}\\
+
+patients' = patients\\ 
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor\\
+doctors' = doctors\\
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.callPerMin \\
+m \le balance(p?)\\
+balance' = balance \oplus \{p? \mapsto balance(p?)-m\} \\
+status' = status \oplus \{p? \mapsto u?\}\\
+pharmacies' = pharmacies
+\end{schema}
+
+\begin{schema}{FaildReserve}
+\Xi SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.callPerMin \\
+m > balance(p?) \lor \\
+p? \notin patients \lor \\
+d? \notin doctors \lor \\
+\neg (\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to) \lor\\
+\neg (\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset) 
+\end{schema}
+
+\begin{schema}{Success_3}
+r! : Response
+\where
+r! = Call Reserved
+\end{schema}
+
+\begin{schema}{Failure_3}
+r! : Response
+\where
+r! = Invalid Reserve
+\end{schema}
+
+\begin{zed}
+MakeReserve == (SubmitReserve \land Success_3) \lor (FaildReserve \land Failure_3)
+\end{zed}
+
+\section*{5}
+
+در این بخش عملیات تماس آنلاین با دکتر را توصیف میکنیم. اولا باید بررسی کنیم که دکتر مورد نظر در حال تماس آنلاین و یا تماس تایپی در آن تاریخ و زمان با شخص دیگری نباشد دوما کسی در آن تاریخ و زمان با دکتر رزرو نکرده باشد و اعتبار کافی داشته باشد و در انتهای تماس هزینه اش از اعتبارش کم شود.
+\begin{schema}{SubmitCall}
+\Delta SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+p? \in patients\\
+d? \in doctors\\
+\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to\\
+\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+\forall p:Patient | p \in calledDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in calledDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+\forall p:Patient | p \in textDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in textDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+calledDoctor'= calledDoctor \oplus \{p? \mapsto \{calledDoctor(p) \cup \{(t?,s?,d?)\} \}\}\\
+
+patients' = patients\\ 
+callReserve' = callReserve\\
+textDoctor' = textDoctor\\
+doctors' = doctors\\
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.callPerMin \\
+m \le balance(p?)\\
+balance' = balance \oplus \{p? \mapsto balance(p?)-m\} \\
+status' = status \oplus \{p? \mapsto u?\}\\
+pharmacies' = pharmacies
+\end{schema}
+
+\begin{schema}{FaildCall}
+\Xi SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.callPerMin \\
+m > balance(p?) \lor \\
+p? \notin patients \lor \\
+d? \notin doctors \lor \\
+\neg (\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to) \lor\\
+\neg (\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset) \lor \\
+\neg(\forall p:Patient | p \in calledDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in calledDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset)\lor\\
+\neg(\forall p:Patient | p \in textDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in textDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset)
+\end{schema}
+
+\begin{schema}{Success_4}
+r! : Response
+\where
+r! = Call Made
+\end{schema}
+
+\begin{schema}{Failure_4}
+r! : Response
+\where
+r! = Invalid Call
+\end{schema}
+
+\begin{zed}
+MakeCall == (SubmitCall \land Success_4) \lor (FaildCall \land Failure_4)
+\end{zed}
+
+\section*{6}
+در این بخش به مانند بخش قبل عملیات تماس تایپی با دکتر را توصیف می کنیم.
+\begin{schema}{SubmitText}
+\Delta SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+p? \in patients\\
+d? \in doctors\\
+\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to\\
+\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+\forall p:Patient | p \in calledDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in calledDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+\forall p:Patient | p \in textDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in textDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset\\
+
+textDoctor'= textDoctor \oplus \{p? \mapsto \{textDoctor(p) \cup \{(t?,s?,d?)\} \}\}\\
+
+patients' = patients\\ 
+callReserve' = callReserve\\
+calledDoctor' = calledDoctor\\
+doctors' = doctors\\
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.textPerMin \\
+m \le balance(p?)\\
+balance' = balance \oplus \{p? \mapsto balance(p?)-m\} \\
+status' = status \oplus \{p? \mapsto u?\}\\
+pharmacies' = pharmacies
+\end{schema}
+
+\begin{schema}{FaildText}
+\Xi SnappDoctor\\
+p? : Patient\\
+d? : Doctor\\
+t? : Date\\
+s? : Schedule\\
+u? : Description\\
+m : \nat
+\where
+m = (((s?.to).1 - (s?.from).1)*60+((s?.to).2 - (s?.from).2))*d?.textPerMin \\
+m > balance(p?) \lor \\
+p? \notin patients \lor \\
+d? \notin doctors \lor \\
+\neg (\exists x:Schedule | x \in d?.schedules @ x.day = s?.day \land x.from \le s?.from \land x.to \ge s?.to) \lor\\
+\neg (\forall p:Patient | p \in callReserve @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in callReserve(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset) \lor \\
+\neg(\forall p:Patient | p \in calledDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in calledDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset)\lor\\
+\neg(\forall p:Patient | p \in textDoctor @ \\
+\t1 \forall x:Date \cross Schedule \cross Doctor | x \in textDoctor(p)@\\
+\t1 \t1 x.1 = t? \land x.3 = p? \implies x.2 \cap s? = \emptyset)
+\end{schema}
+
+\begin{schema}{Success_5}
+r! : Response
+\where
+r! = Text Made
+\end{schema}
+
+\begin{schema}{Failure_5}
+r! : Response
+\where
+r! = Invalid Text
+\end{schema}
+
+\begin{zed}
+MakeText == (SubmitText \land Success_5) \lor (FaildText \land Failure_5)
+\end{zed}
+
+\section*{7}
+
+در این بخش عملیات جستجوی دکتر بر اساس نام و یا بر اساس تخصص اش را توصیف میکنیم.
+\begin{schema}{SearchByName}
+\Xi SnappDoctor\\
+fn? : Name\\
+ln? : Name\\
+d! : \power~ Doctor
+\where
+d! = \{x:Doctor | x \in doctors \land (x.firstName = fn? \lor x.lastName = ln?)\}
+\end{schema}
+
+\begin{schema}{SearchByMajor}
+\Xi SnappDoctor\\
+m? : Major\\
+d! : \power~ Doctor
+\where
+d! = \{x:Doctor | x \in doctors \land x.major = m?\}
+\end{schema}
+
+\section*{8}
+
+در این بخش عملیات ثبت نام داروخانه را توصیف میکنیم. در ابتدا باید چک کنیم که پروانه کسب داروخانه معتبر است و چون این کار توسط یک \lr{third party} انجام میشود ما نیز از یک تابع پیشفرض برای اعتبار سنجی آن استفاده میکنیم به نام \lr{checkLicense} . در ضمن باید بررسی کنیم که هیچ دو داروخانه ای پروانه کسب یکسان نداشته باشند.
+\begin{schema}{RegisterPharmacy}
+\Delta SnappDoctor\\
+p? : Pharmacy
+\where
+checkLicense(p?.license)\\
+\forall p:Pharmacy | p \in pharmacies @ p.license \neq p?.license\\
+doctors' = doctors\\
+patients' = patients\\ 
+callReserve'= callReserve\\
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor
+balance' = balance\\
+status' = status\\
+pharmacies' = pharmacies \cup p?  
+\end{schema}
+
+\begin{schema}{Success_6}
+r! : Response
+\where
+r! = Pharmacy Registered
+\end{schema}
+
+\begin{schema}{PharmacyNotValid}
+\Xi SnappDoctor\\
+p? : Pharmacy
+\where
+\neg checkLicense(p?.license) \lor\\ 
+\t1 \exists p: Pharmacy | p \in pharmacies @ p.license = p.license
+\end{schema}
+
+\begin{schema}{Failure_6}
+r! : Response
+\where
+r! = License is Not Valid
+\end{schema}
+
+\begin{zed}
+SignUpPharmacy == (RegisterPharmacy \land Success_6) \lor (PharmacyNotValid \land Failure_6)
+\end{zed}
+
+\section*{9}
+
+در این بخش عملیات خرید دارو را توصیف میکنیم. اولا باید نسخه بیمار صحت سنجی شود که این کار توسط یک تابع پیشفرض انجام می شود به نام \lr{checkPr} . داروخانه باید تمام داروهای مدنظر مشتری را داشته باشد. مشتری نیز باید پول دارو ها را با کارت اعتباری اش پرداخت کند که این عملیات با استفاده از تابع \lr{transaction} صورت میگیرد.
+\begin{schema}{PurchaseDrugs}
+\Delta SnappDoctor\\
+d? : \power~Drug\\
+pr? : Prescription\\
+p? : Pharmacy\\
+c? : CreditCard\\
+m : \nat
+\where
+checkPr(pr?)
+p? \in pharmacies\\
+d? \subseteq p?.drugs\\
+m = \#(d?)*p?.pricePerDrug\\
+transaction(c?,m)\\
+doctors' = doctors\\
+patients' = patients\\ 
+callReserve'= callReserve\\
+calledDoctor' = calledDoctor\\
+textDoctor' = textDoctor
+balance' = balance\\
+status' = status\\
+pharmacies' = pharmacies
+\end{schema}
+
+\begin{schema}{PurchaseFaild}
+\Xi SnappDoctor\\
+d? : \power~Drug\\
+pr? : Prescription\\
+p? : Pharmacy\\
+c? : CreditCard\\
+m : \nat
+\where
+m = \#(d?)*p?.pricePerDrug\\
+\neg checkPr(pr?) \lor\\
+p? \notin pharmacies \lor\\
+\neg transaction(c?,m) \lor\\
+\neg (d? \subseteq p?.drugs)
+\end{schema}
+
+\begin{schema}{Success_7}
+r! : Response
+\where
+r! = Purchase Made
+\end{schema}
+
+\begin{schema}{Failure_7}
+r! : Response
+\where
+r! = Purchase Faild
+\end{schema}
+
+\begin{zed}
+BuyDrugs == (PurchaseDrugs \land Success_7) \lor (PurchaseFaild \land Failure_7)
+\end{zed}
+
+\section*{10}
+
+در این بخش عملیات جستجوی داروخانه بر اساس اسم و یا بر اساس یک مجموعه دارو را توصیف میکنیم.
+\begin{schema}{SearchPharmacyByName}
+\Xi SnappDoctor\\
+n? : Name\\
+p! : \power~ Pharmacy
+\where
+p! = \{x:Pharmacy | x \in pharmacies \land x.name = n? \}
+\end{schema}
+
+\begin{schema}{SearchPharmacyByDrugs}
+\Xi SnappDoctor\\
+d? : \power~Drug\\
+p! : \power~ Doctor
+\where
+p! = \{x:Pharmacy | x \in pharmacies \land d? \subseteq x.drugs\}
+\end{schema}
+
+\end{document}
+
