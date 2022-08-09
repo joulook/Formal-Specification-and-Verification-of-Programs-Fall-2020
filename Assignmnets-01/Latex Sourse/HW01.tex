@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{czt} 
+\usepackage{xepersian}  
+\newcommand{\sectionbreak}{\clearpage}
+\settextfont[Scale=1.2]{BZAR.TTF}
+
+\title{\lr{Formal Specification and Verification of Programs}}
+\author{\lr{1st Assignment Solutions}\\
+\lr{Mohammad Hossein Khoshechin - 99210164}\\
+\lr{Group 2}}
+
+\begin{document}
+
+\maketitle
+
+\section*{تمرین ۱ : یافتن ب. م. م. و ک. م. م. دو عدد}
+در این تمرین ابتدا تابع \lr{x~divides~y} را تعریف کردم که بخش پذیری \lr{y} به \lr{x} را نشان میدهد
+\\
+با استفاده از این تابع توصیف ب.م.م و ک.م.م دو عدد را انجام داده ام
+\begin{axdef}
+\_ divides\_ : \nat_1 \rel \nat
+\where
+\forall x:\nat_1 ; y:\nat @ x~divides~y \iff \exists k:\nat @ x\star k = y
+\end{axdef}
+
+\begin{axdef}
+gcd\_\_ : \nat \cross \nat \fun \nat
+\where
+\forall x, y:\nat @ gcd~x~y = (\mu z : \nat | z~divides~x \land z~devides~y \land \\
+		\t1 \t1 (\forall u :\nat @ u~divides~x \land u~devides~y \implies u \leq z))
+\end{axdef}
+
+\begin{axdef}
+lcm\_\_ : \nat \cross \nat \fun \nat
+\where
+\forall x, y:\nat @ lcm~x~y = (\mu z : \nat | x~divides~z \land y~devides~z \land \\
+		\t1 \t1 (\forall u :\nat @ x~divides~u \land y~devides~u \implies u \geq z))
+\end{axdef}
+{\sectionbreak}{\clearpage}
+\section*{تمرین ۲ : رنگ‌آمیزی یک گراف ساده با کمترین تعداد رنگ}
+در این تمرین ابتدا تایپ \lr{Node} و \lr{Color} را تعریف کرده ام سپس در قسمت اعلان مجموعه \lr{nodes} و روابط \lr{edges} و \lr{colored} را تعریف کرده ام
+\\
+در بخش اول \lr{predicate} توصیف کرده ام هر نود در گراف دارای یک رنگ می باشد.
+در بخش دوم \lr{predicate} توصیف کرده ام که هر نود فقط میتواند یک رنگ داشته باشد .
+در بخش سوم \lr{predicate} توصیف کرده ام که نود های دو سر یک یال باید رنگشان متفاوت با یکدیگر باشد .
+در بخش چهارم \lr{predicate} توصیف کرده ام که اگر هر مجموعه رنگ با عناصر کوچکتر از مجموعه رنگ فرض شده در نظر بگیریم حتما یک یال خواهیم داشت که نود های دو سر آن هم رنگ باشند.
+\begin{zed}
+[Node]\\
+[Color]
+\end{zed}
+
+\begin{schema}{Graph Coloring}
+nodes: \power~ Node \\
+edges: \power~(Node \cross Node)\\
+colored : \power~(Node \cross Color)
+\where
+\forall x:Node @ x \in nodes \implies \exists c:Color @ x \mapsto c \in colored\\
+\forall x:Node ; c1,c2:Color @ x\in nodes \land x \mapsto c1 \in colored \land \\
+ \t1 \t1 \t1 \t1 \t1 \t1 x \mapsto c2 \in colored \implies c1=c2\\
+\forall x1,x2:Node | x1 \in nodes \land x2 \in nodes @ x1 \mapsto x2 \in edges \implies \\
+\t1 \t1 \t1 \t1 \lnot \exists c:Color @ x1 \mapsto c \in colored \land x2 \mapsto c \in colored\\
+\forall c:\power~Color @ \# c < \#colored(|Node|) \implies \exists x1,x2:Node;c0:Color |\\
+\t1 \t1 \t1 x1 \in nodes \land x2 \in nodes \land c0 \in c @ \\
+\t1 \t1 \t1  \t1 x1 \mapsto x2 \in edges \land x1 \mapsto c0 \in \power~(Node \cross c) \land x2 \mapsto c0 \in \power~(Node \cross c)
+\end{schema}
+\end{document}
+
