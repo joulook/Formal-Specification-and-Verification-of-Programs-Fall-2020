@@ -1,0 +1,431 @@
+\documentclass{article}
+\usepackage{czt} 
+\usepackage{xepersian}  
+\newcommand{\sectionbreak}{\clearpage}
+\settextfont[Scale=1.2]{BZAR.TTF}
+
+\title{\lr{Formal Specification and Verification of Programs}}
+\author{\lr{2nd Assignment Solutions}\\
+\lr{Mohammad Hossein Khoshechin - 99210164}\\
+\lr{Group 2}}
+
+\begin{document}
+
+\maketitle
+
+\section*{تمرین ۱ : بازی \lr{X-O}}
+بازی \lr{X-O} یک بازی دو نفره است که بر روی یک جدول انجام می شود . یک بازیکن به طور قردادی برای علامت زدن خانه های جدول از نماد \lr{X} استفاده می کند و بازیکن دیگر از نماد \lr{O} استفاده می کند.هر بازیکن زمانی که نوبتش رسید می تواند تنها در یکی از خانه های خالی جدول ، نمادش را قرار دهد . قرار داد می کنیم که در زمان شروع بازی ،  نوبت متعلق به بازیکن \lr{X} می باشد . هر بازیکن بعد از اینکه در نوبت خود یک خانه را علامت زد ، نوبت به بازیکن دیگر داده می شود. هر زمان که سه خانه از جدول به شکل سطری ،  ستونی و یا قطری ، تنها با استفاده از یک نماد پر شود آنگاه بازیکنی که با آن نماد بازی میکرده ،  برنده است . زمانی که تمام خانه های جدول پر شود اما هیچ یک از سطرها ،  ستون ها و قطرها ،  تنها با یک نماد پر نشده باشد آنگاه بازی مساوی می شود.
+\\
+\begin{zed}
+Index~ == ~\{a : \nat | a < 3\}~\\
+Cell~ == ~Index \cross Index\\
+State == ~empty|x|o\\
+Turn == x|o\\
+Message == Cell\_Filled | Action\_Faild | Xwin | Owin | noWinner
+\end{zed}
+
+\begin{schema}{GameTable}
+table : Cell \fun State\\
+pturn : Turn
+\end{schema}
+
+\begin{schema}{GameTableInit}
+GameTable'
+\where
+\forall c:Cell @ table'~c = empty\\
+pturn' = x
+\end{schema}
+\\
+تا به اینجا \lr{state} را تعریف کردیم که دارای یک جدول است. هر خانه از جدول هم به یک وضعیت مپ شده است در حالت \lr{initial} هم تمام خانه ها را \lr{empty} در نظر میگیرم و نوبت را به بازیکن \lr{x} میدهیم.
+\\
+\\
+حال دو تا \lr{Schema Operator} مینویسیم برای بازی کردن بازکن \lr{x} و بازیکن \lr{o} . در هر کدام یک متغیر \lr{Cell} به عنوان وروردی میگیریم و یک پیام \lr{output} هم به عنوان خروجی قرار میدهیم.
+\\
+\\
+\begin{schema}{Oplay}
+\Delta GameTable\\
+location? : Cell\\
+output! : Message
+\where
+pturn = o\\
+table~ ~location? = empty\\
+table' = table \oplus \{~ location? \mapsto o ~\}\\
+output! = Cell\_Filled\\
+pturn' = x
+\end{schema}
+\\
+\\
+\begin{schema}{Xplay}
+\Delta GameTable\\
+location? : Cell\\
+output! : Message
+\where
+pturn = x\\
+table~ ~location? = empty\\
+table' = table \oplus \{~ location? \mapsto x ~\}\\
+output! = Cell\_Filled\\
+pturn' = o
+\end{schema}
+\\
+حال باید این نکته را در نظر بگیریم که ممکن است زمانی که یک بازیکن میخواهد خانه ای از جدول را پر کند ، آن خانه خالی نباشد یا نوبتش نباشد. پس باید یک \lr{Schema Operator} هم برای هر دو بازی کن لحاظ کنیم .
+\\
+
+\begin{schema}{OplayFaild}
+\Xi GameTable\\
+location? : Cell\\
+output! : Message
+\where
+pturn = x\\
+table~ ~location? \neq empty\\
+output! = Action\_Faild
+\end{schema}
+
+\begin{schema}{XplayFaild}
+\Xi GameTable\\
+location? : Cell\\
+output! : Message
+\where
+pturn = o\\
+table~ ~location? \neq empty\\
+output! = Action\_Faild
+\end{schema}
+\\
+حال با \lr{disjunction} کردن \lr{Schema Operator} ها ، \lr{Schema Operator} مربوط به حرکت هر دو بازیکن را تعریف می کنیم :
+
+\begin{zed}
+MoveX == Xplay \lor XplayFaild\\
+MoveO == Oplay \lor OplayFaild
+\end{zed}
+\\
+حال با نوشتن چند \lr{Schema Operator} ، شرط خاتمه بازی را تعریف میکنیم . برای این کار باید سه تا \lr{Schema Operator} بنویسیم   یکی باری برد بازیکن \lr{x} ، یکی برای برد بازیکن \lr{o} و دیگری برای حالت تساوی.
+\\
+
+\begin{schema}{Xwin}
+\Xi GameTable\\
+output! : Message
+\where
+\exists i_1 , i_2 , i_3 , j_1 , j_2 , j_3 : Index @\\
+\t1 (~(i_1=i_2) \land (i_2=i_3) \land (j_2 = j_1+1) \land (j_3 = j_2+1) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ x ~\})~) \lor\\
+\t1 (~(j_1=j_2) \land (j_2=j_3) \land (i_2 = i_1+1) \land (i_3 = i_2+1) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ x ~\})~) \lor\\
+\t1 (~(i_1,j_1)=(0,0) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(2,2) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ x ~\})~) \lor\\
+\t1 (~(i_1,j_1)=(0,2) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(0,2) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ x ~\})~)\\
+output! = Xwin
+\end{schema}
+
+\begin{schema}{Owin}
+\Xi GameTable\\
+output! : Message
+\where
+\exists i_1 , i_2 , i_3 , j_1 , j_2 , j_3 : Index @\\
+\t1 (~(i_1=i_2) \land (i_2=i_3) \land (j_2 = j_1+1) \land (j_3 = j_2+1) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ o ~\})~) \lor\\
+\t1 (~(j_1=j_2) \land (j_2=j_3) \land (i_2 = i_1+1) \land (i_3 = i_2+1) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ o ~\})~) \lor\\
+\t1 (~(i_1,j_1)=(0,0) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(2,2) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ o ~\})~) \lor\\
+\t1 (~(i_1,j_1)=(0,2) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(0,2) \land\\
+\t1 \t1 \t1 \t1 (table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) = \{~ o ~\})~)\\
+output! = Owin
+\end{schema}
+
+\begin{schema}{WithDraw}
+\Xi GameTable\\
+output! : Message
+\where
+\forall c: Cell @ table~ ~c \neq empty\\
+\forall i_1 , i_2 , i_3 , j_1 , j_2 , j_3 : Index @\\
+\t1 (~((i_1=i_2) \land (i_2=i_3) \land (j_2 = j_1+1) \land (j_3 = j_2+1)) \implies\\
+\t1 \t1 \t1 \t1 (\#table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) \neq 1)~) \land\\
+\t1 (~((j_1=j_2) \land (j_2=j_3) \land (i_2 = i_1+1) \land (i_3 = i_2+1)) \implies\\
+\t1 \t1 \t1 \t1 (\#table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) \neq 1)~) \land\\
+\t1 (~((i_1,j_1)=(0,0) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(2,2)) \implies\\
+\t1 \t1 \t1 \t1 (\#table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) \neq 1)~) \land\\
+\t1 (~((i_1,j_1)=(0,2) \land (i_2,j_2)=(1,1) \land (i_3,j_3)=(0,2)) \implies\\
+\t1 \t1 \t1 \t1 (\#table(\{~ (i_1,j_1) , (i_2,j_2) , (i_3,j_3) ~\}) \neq 1)~) \\
+output! = noWinner
+\end{schema}
+
+\begin{zed}
+End == Xwin \lor Owin \lor WithDraw
+\end{zed}
+
+\begin{zed}
+XOGame == MoveX \lor MoveO \lor End
+\end{zed}
+
+\section*{تمرین ۲ : بازی \lr{pac-man}}
+بازی پکمن به این صورت است که در یک جدول انجام میشود . بعضی از خانه های جدول دیوار \lr{wall} هستند و بعضی دیگر مسیر \lr{path}. \lr{Agent} های بازی به شکل پکمن ، روح ها و دانه ها هستند . ما به عنوان بازیکن تنها هدایت پکمن را بر عهده داریم . طبیعتا پکمن تنها در خانه هایی که مسیر هستند می تواند حرکت کند و نمی تواند وارد خانه هایی شود که دیوار هستند . پکمن زمانی که در یک خانه وارد میشود اگر در آن خانه دانه باشد آن را می خورد و اگر روح باشد کشته می شود و بازی تمام می شود . زمانی برنده می شویم که پکمن تمام دانه های موجود در جدول را بخورد. دانه ها تنها در خانه هایی که دیوار نیستند قرار داده می شوند . حرکت روح ها در این سناریو به طور تصادفی است و هدفمند نیست . روح ها نیز مانند پکمن نمی توانند وارد خانه هایی شوند که دیوار است . دیوار ها باید طوری در جدول قرار گیرند که بین هر دو خانه ای که در جدول دیوار نیستند(\lr{path} هستند) ، مسیری از خانه های \lr{path} وجود داشته باشد.
+\\ 
+\begin{zed}
+Cell~ == ~\nat \cross \nat\\
+State == ~wall | path\\
+Message == win | defeated\\
+Move == UP | DOWN | LEFT | RIGHT
+\end{zed}
+
+\begin{schema}{GameTable}
+table : Cell \fun State\\
+pacman : Cell\\
+ghosts : \power~Cell\\
+seeds : \power~Cell\\
+length : \nat\\
+width : \nat
+\where
+\forall i,j : \nat | (i,j) \in dom ~ table @ i < width \land j < length\\
+\exists c_1,c_2,c_3 : Cell @ (c_1 \neq c_2) \land (c_2 \neq c_3 ) \land (table(\{~ c_1 , c_2 , c_3 ~\}) = \{~ path ~\}) \land\\
+\t1 \t1 \{~ c_1 , c_2 , c_3 ~\} \subset dom~~ table
+\forall c: Cell | c \in seeds @ table~~c = path\\
+\#gosts \ge 1\\
+\#seeds \ge 1\\
+table ~ pacman = path\\
+pacman \in dom~~table\\
+seeds \subset dom~~table\\
+ghosts \subset dom~~table\\
+table(ghosts) = \{~ path ~\}\\
+table(seeds) = \{~ path ~\}\\
+\forall c_1,c_2:Cell| c_1 \in dom~~ table \land c_2 \in dom~~ table \land c_1 \neq c_2@ (table(\{~ c_1 , c_2~\}) = \{~ path ~\} ) \implies\\
+ \t1 (\exists road : Seq~~Cell @ head~~road = c_1 \land (\forall x: \nat| x \ge 1 \land x < \#road @\\
+ \t1 \t1 table(\{~ road~~x , road~~x+1~\}) = \{~ path ~\} \land \\
+ \t1 \t1(\exists i_1,i_2,j_1,j_2 : \nat |(i_1,j_1)=road~~x \land (i_2,j_2)=road~x+1@(i_1=i_2+1 \land j_1=j_2)\lor\\
+ \t1 \t1 \t1(j_1=j_2+ \land i_1=i_2))) \land\\
+ \t1 road~~\#road = c_2) 
+\end{schema}
+
+اندازه جدول توسط بازیکن قبل از شروع بازی مشخص می شود و اندازه جدول حداقل \lr{3*3} باید باشد. تعداد روح ها و دانه ها و جایگاهشان همراه با جایگاه پکمن در ابتدای بازی به شکل تصادفی انتخاب می شوند .
+
+\begin{schema}{GameTableInit}
+GameTable'\\
+sampleLength? : \nat\\
+sampleWidth? : \nat
+\where
+pacman' \notin gosts'\\
+table' = sampleTable\\
+pacman' = samplePacman\\
+ghosts' = sampleGhosts\\
+seeds' = sampleSeeds\\
+length' = sampleLength?\\
+width' = sampleWidth?\\ 
+sampleWidth \ge 3\\
+sampleLength \ge 3\\
+pacman' \neq \emptyset
+\end{schema}
+
+\begin{axdef}
+sampleTable : Cell \fun State
+\end{axdef}
+
+\begin{axdef}
+samplePacman : Cell 
+\end{axdef}
+
+\begin{axdef}
+sampleGhosts : \power~Cell 
+\end{axdef}
+
+\begin{axdef}
+sampleSeeds : \power~Cell 
+\end{axdef}
+
+در این قسمت حرکت پکمن را توصیف کرده ایم.
+
+\begin{schema}{PMoveUp}
+\Delta GameTable\\
+i : \nat\\
+j : \nat\\
+direction? : Move
+\where
+direction? = UP\\
+table' = table\\
+(i,j) = pacman\\
+table (i-1,j) \neq wall
+pacman' = (i-1,j)\\
+ghosts' = ghosts\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{PMoveDown}
+\Delta GameTable\\
+i : \nat\\
+j : \nat
+direction? : Move
+\where
+direction? = DOWN\\
+table' = table\\
+(i,j) = pacman\\
+table (i+1,j) \neq wall
+pacman' = (i+1,j)\\
+ghosts' = ghosts\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{PMoveRight}
+\Delta GameTable\\
+i : \nat\\
+j : \nat
+direction? : Move
+\where
+direction? = Right\\
+table' = table\\
+(i,j) = pacman\\
+table (i,j+1) \neq wall
+pacman' = (i,j+1)\\
+ghosts' = ghosts\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{PMoveLeft}
+\Delta GameTable\\
+i : \nat\\
+j : \nat\\
+direction? : Move
+\where
+direction? = LEFT\\
+table' = table\\
+(i,j) = pacman\\
+table (i,j-1) \neq wall
+pacman' = (i,j-1)\\
+ghosts' = ghosts\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{zed}
+MovePacman == PMoveUp \lor PMoveDown \lor PMoveLeft \lor PMoveRight 
+\end{zed}
+
+در این قسمت عملات خوردن دانه توسط پکمن را توصیف کرده ایم.
+
+\begin{schema}{EatSeed}
+\Delta GameTable
+\where
+table' = table\\
+pacman \in seeds\\
+seeds' = seeds \backslash pacman\\
+ghosts' = ghosts\\
+length' = length\\
+width' = width 
+\end{schema}
+
+
+در این قسمت حرکت روح ها را که قرار است تصادفی و غیر هوشمندانه باشد را توصیف کرده ایم.
+\\
+همان طور که در \lr{State Schema} مشخص است ، بنده در این توصیف روح ها را یک مجموعه از مختصات تعریف کردم ، به این معنا که هر کدامشان در یک خانه از جدول هستند. حال ۴ \lr{operation Schema} برای تعریف حرکت روح ها نوشتم یکی برای بالا رفتنشان ،  یکی برای پایین رفت ،  یکی برای راست رفتن و یکی برای چپ رفتن . در ادامه یکی از آن ها را توضیح میدهم.
+\\
+یک مجموعه \lr{temp} تعریف میکنیم از مختصات که معرف مجموعه جدیدی از مختصات روح هاست . حالا یا روح ها بالا میروند به طور همزمان و یا سر جایشان می ایستند . پس میگوییم به ازای هر مختصات از روح ها که داریم یک مختصات در مجموعه \lr{temp} داریم که یا معادل خانه بالایی آن روح است و بدین معنی است که آن روح بالا می رود و یا معادل با همان خانه ای است که روح در آن قرار دارد به این معنا که روح سرجایش میماند و تکون نمی خورد.
+
+\begin{schema}{GMoveUp}
+\Delta GameTable\\
+temp : \power~Cell
+\where
+\#temp = \#ghosts\\
+\forall c : Cell @ c \in ghosts \implies \exists t :Cell | t \in temp @ t=c \lor\\
+\t1 (\exists i_1,i_2,j_1,j_2 : \nat | (i_1,j_1) = c \land (i_2,j_2) = t @ i_2 = i_1-1 \land j_1=j_2)\\
+table(temp) = \{~path~\}\\
+temp \in dom~~ table\\
+table' = table\\
+pacman' = pacman\\
+ghosts' = temp\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{GMoveDown}
+\Delta GameTable\\
+temp : \power~Cell
+\where
+\#temp = \#ghosts\\
+\forall c : Cell @ c \in ghosts \implies \exists t :Cell | t \in temp @ t=c \lor\\
+\t1 (\exists i_1,i_2,j_1,j_2 : \nat | (i_1,j_1) = c \land (i_2,j_2) = t @ i_2 = i_1+1 \land j_1=j_2)\\
+table(temp) = \{~path~\}\\
+temp \in dom~~ table\\
+table' = table\\
+pacman' = pacman\\
+ghosts' = temp\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{GMoveRight}
+\Delta GameTable\\
+temp : \power~Cell
+\where
+\#temp = \#ghosts\\
+\forall c : Cell @ c \in ghosts \implies \exists t :Cell | t \in temp @ t=c \lor\\
+\t1 (\exists i_1,i_2,j_1,j_2 : \nat | (i_1,j_1) = c \land (i_2,j_2) = t @ i_2 = i_1 \land j_1 + 1=j_2)\\
+table(temp) = \{~path~\}\\
+temp \in dom~~ table\\
+table' = table\\
+pacman' = pacman\\
+ghosts' = temp\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+\begin{schema}{GMoveLeft}
+\Delta GameTable\\
+temp : \power~Cell
+\where
+\#temp = \#ghosts\\
+\forall c : Cell @ c \in ghosts \implies \exists t :Cell | t \in temp @ t=c \lor\\
+\t1 (\exists i_1,i_2,j_1,j_2 : \nat | (i_1,j_1) = c \land (i_2,j_2) = t @ i_2 = i_1 \land j_1 - 1=j_2)\\
+table(temp) = \{~path~\}\\
+temp \in dom~~ table\\
+table' = table\\
+pacman' = pacman\\
+ghosts' = temp\\
+seeds' = seeds\\
+length' = length\\
+width' = width 
+\end{schema}
+
+حال در این بخش سعی کردم به نحوی حرکت تصادفی روح ها را بیان کنم 
+
+\begin{zed}
+MoveGhosts == \exists m:Move @\\
+\t1 (m = UP\land GMoveUp)\lor (m = DOWN\land GMoveDown)\lor\\
+\t1 \t1 (m = RIGHT\land GMoveLeft)\lor (m = LEFT\land GMoveRight)
+\end{zed}
+
+در این بخش هم حالت بردن و باختن بازی را توصیف کرده ایم
+
+\begin{schema}{Win}
+\Xi GameTable\\
+output! : Message
+\where
+seeds = \emptyset\\
+output! = win
+\end{schema}
+
+\begin{schema}{Defeated}
+\Xi GameTable\\
+output! : Message
+\where
+pacman \in ghosts\\
+output! = defeated
+\end{schema}
+
+\begin{zed}
+End == Win \lor Defeated
+\end{zed}
+
+\begin{zed}
+PacmanGame == MovePacman \lor EatSeed \lor MoveGhosts \lor End
+\end{zed}
+
+
+\end{document}
+
