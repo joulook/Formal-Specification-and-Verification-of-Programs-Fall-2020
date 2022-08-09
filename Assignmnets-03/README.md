@@ -1,5 +1,7 @@
 # Assingments-03
 
+My 3rd project was in the "Formal Specification and Verification of Programs" course when I was in the 1st semester of my master's at SUT. In this project I formally specified an online medical consultation system.
+
 ## Online medical consultation system
 
 | <img src="01.png" alt="Pair Game" width="600"/> | 
