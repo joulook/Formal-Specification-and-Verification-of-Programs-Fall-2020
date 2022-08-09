@@ -2,7 +2,7 @@
 
 ## Tic-tac-toe Game Specification
 
-| <img src="01.png" alt="Pair Game" width="400"/> | 
+| <img src="01.png" alt="Pair Game" width="600"/> | 
 |:--:| 
 | *part01* |
 
