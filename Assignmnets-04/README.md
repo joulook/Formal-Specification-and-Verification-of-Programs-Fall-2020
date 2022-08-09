@@ -1,5 +1,7 @@
 # Assingments-04
 
+My 4th project was in the "Formal Specification and Verification of Programs" course when I was in the 1st semester of my master's at SUT. In this project I formally specified a Family Payment Systems.
+
 ## Family Payment Systems
 
 | <img src="01.png" alt="Pair Game" width="600"/> | 
