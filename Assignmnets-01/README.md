@@ -2,12 +2,12 @@
 
 ## Finding GCD and LCM of two numbers Specification
 
-| <img src="01.png" alt="Pair Game" width="400"/> | 
+| <img src="01.png" alt="Pair Game" width="700"/> | 
 |:--:| 
 | *specification with Z-notation* |
 
 ## Graph Coloring with Minimum Colors Specification
 
-| <img src="02.png" alt="Pair Game" width="400"/> | 
+| <img src="02.png" alt="Pair Game" width="700"/> | 
 |:--:| 
 | *specification with Z-notation* |
