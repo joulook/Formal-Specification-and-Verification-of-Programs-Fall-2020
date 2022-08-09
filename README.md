@@ -4,11 +4,22 @@ In this repository, you can find all of my assignments and quizes for the Formal
 #
 My projects list for this course:
 
-| Assignmnets Title  | Details |
+| Assignmnets-01  | Details |
 | ------------- | ------------- |
 | Finding GCD and LCM of two numbers Specification | Z-notation  |
 | Graph Coloring with Minimum Colors Specification | Z-notation  |
+
+| Assignmnets-02  | Details |
+| ------------- | ------------- |
 | Tic-tac-toe Game Specification | Z-notation |
 | Pac-Man Game Specification | Z-notation |
+
+
+| Assignmnets-03  | Details |
+| ------------- | ------------- |
 | Online medical consultation system | Z-notation |
+
+
+| Assignmnets-04  | Details |
+| ------------- | ------------- |
 | Family Payment Systems | Z-notation |
