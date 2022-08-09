@@ -1,0 +1,487 @@
+\documentclass{article}
+\usepackage{czt} 
+\usepackage{xepersian}  
+\newcommand{\sectionbreak}{\clearpage}
+\settextfont[Scale=1.2]{BZAR.TTF}
+
+\title{\lr{Formal Specification and Verification of Programs}}
+\author{\lr{4th Assignment Solutions}\\
+\lr{Mohammad Hossein Khoshechin - 99210164}\\
+\lr{Group 2}}
+
+\begin{document}
+
+\maketitle
+
+\footnotesize
+\section*{توصیف سیستم مدیریت مالی یک خانواده}
+\subsection*{آ}
+
+\begin{zed}
+[id]\\
+[person]\\
+payModel ::= im|lo|rp\\
+familyMember ::= mo|fa|ch1|ch2|other\\
+usage ::= food|gift|salary|stuff|insurance|health|cloth|transport|equipmentAssest|bill|etc\\
+message ::= OK | ‫‪Person Not Member‬‬|Payment‫‪ Not Found|Imprest  Not Balance|CostNotFound|\\
+DateNotValid| DateNotMatch\\
+Day~ == ~\{a : \nat_1 | a < 32\}~\\
+Mounth~ == ~\{a : \nat_1 | a < 13\}~\\
+Year~ == ~\{a : \nat_1 | a < 1501 \land a>1299\}~\\
+\end{zed}
+
+\subsection*{ب}
+
+\begin{axdef}
+Family : person \rel familyMember
+\where
+(\exists_1 m : familyMember,p : person @ p \mapsto m \in Family \land m =fa) \lor\\
+\t1 \t1 \lnot(\exists m : familyMember,p : person @ p \mapsto m \in Family \land m =fa)\\
+
+(\exists_1 m : familyMember,p : person @ p \mapsto m \in Family \land m =mo) \lor\\
+\t1 \t1 \lnot(\exists m : familyMember,p : person @ p \mapsto m \in Family \land m =mo) \\
+
+(\exists_1 m : familyMember,p : person @ p \mapsto m \in Family \land m =ch1)\lor\\
+\t1 \t1 \lnot(\exists m : familyMember,p : person @ p \mapsto m \in Family \land m =ch1)\\
+
+(\exists_1 m : familyMember,p : person @ p \mapsto m \in Family \land m =ch2)\lor\\
+\t1 \t1 \lnot(\exists m : familyMember,p : person @ p \mapsto m \in Family \land m =ch2)\\
+
+\forall p_1,p_2:person | p_1 \in dom(Family) \land p_2 \in dom(Family) @\exists m_1,m_2:familyMember|\\
+\t1 \t1 m_1 \neq m_2 @ p_1 \mapsto m_1 \in Family \land p_2 \mapsto m_2 \in Family \land p_1 \neq p_2
+
+\end{axdef}
+
+\begin{axdef}
+Payments : id \bij Payment
+\end{axdef}
+
+\begin{axdef}
+Costs : person \fun \power~Cost
+\end{axdef}
+
+\begin{axdef}
+CostsId : id \bij Cost
+\end{axdef}
+
+\begin{axdef}
+ImprestRemind : person \fun (Payment \rel \nat)
+\end{axdef}
+
+\begin{schema}{Date}
+year : Year\\
+mounth : Mounth\\
+day : Day
+\where
+mounth \le 6 \implies day \le 31\\
+mounth \ge 7 \land mounth \neq 12 \implies day \le 30\\
+mounth = 12 \land MOD(year-1303,4) = 0 \implies day \le 30\\
+mounth = 12 \land MOD(year-1303,4) \neq 0 \implies day \le 29
+\end{schema}
+
+\begin{schema}{Payment}
+paymentValue : \nat\\
+payer : person\\
+payee : person\\
+payMode : payModel\\
+paymentDate : \nat \cross \nat \cross \nat
+\where
+paymentValue >0\\
+payer \neq payee
+\end{schema}
+
+\begin{schema}{Cost}
+costValue : \nat\\
+costDate : Date\\
+costUsage : usage\\
+imprestId : id
+\where
+costValue >0
+\end{schema}
+
+\subsection*{ج}
+
+\begin{schema}{FamilyPayment}
+family : Family\\
+costs : Costs\\
+payments : Payments\\
+costId : CostsId\\ 
+imprestRemind : ImprestRemind
+\where
+\forall p : payment | p \in dom(range(imprestRemind))@ p\in range(payments) \land p.payMode = imprest\\
+\forall p :person| p \in dom(imprestRemind) @ p \in dom(family)\\
+\forall p :person| p \in dom(costs) @ p \in dom(family)\\
+\forall p:Payment | p \in range(payments) @ p.payer \in dom(family) \land p.payee \in dom(family)\\
+\forall c:Cost | c \in range(costId) @ \exists p:Person @ c \in costs(p)
+\end{schema}
+
+\subsection*{د}
+\begin{schema}{FamilyPaymentInit}
+FamilyPayment'\\
+family? : Family
+\where
+family' = family?\\
+costs' = \emptyset\\
+payments' = \emptyset\\
+imprestRemind' = \emptyset\\
+costId' = \emptyset
+\end{schema}
+
+\begin{zed}
+\exists State'@ StateInit
+\end{zed}
+
+\begin{zed}
+\exists FamilyPaymen'@ FamilyPaymenInit\\
+\t1 \iff \exists FamilyPaymen' @\\
+\t1 \t1 \t1 \t1 \t1 \t1 \t1  \t1 [definition of FamilyPaymenInint]\\
+\t1 \t1 [FamilyPaymen';family? : Family|\\
+\t1 \t1 \t1 family' = family? \land \\
+\t1 \t1 \t1 costs' = \emptyset \land \\
+\t1 \t1 \t1 payments' = \emptyset \land\\
+\t1 \t1 \t1 imprestRemind' = \emptyset\\
+\t1 \t1 \t1 costId' = \emptyset]\\
+\t1 \t1 \t1 \t1 \t1 \t1 \t1  \t1 [Schema quantification]\\
+\t1 \iff [family? : Family |\\
+\t1 \t1 \exists FamilyPaymen'@\\
+\t1 \t1 \t1 family' = family? \land \\
+\t1 \t1 \t1 costs' = \emptyset \land \\
+\t1 \t1 \t1 payments' = \emptyset \land\\
+\t1 \t1 \t1 imprestRemind' = \emptyset\\
+\t1 \t1 \t1 costId' = \emptyset]\\
+\t1 \iff [family? : Family |\\
+\t1 \t1 \t1 \t1 \t1 \t1 \t1  \t1 [definition of FamilyPayment']\\
+\t1 \t1 \exists family' : Family@\\
+\t1 \t1 \exists costs' : Costs@\\
+\t1 \t1 \exists payments' : Payments@\\
+\t1 \t1 \exists imprestRemind' : ImprestRemind@\\
+\t1 \t1 \exists costId' : CostId@\\
+\t1 \t1 \t1 \forall p : payment | p \in dom(range(imprestRemind'))@\\
+\t1 \t1 \t1 \t1 p\in range(payments') \land p.payMode = imprest \land \\
+\t1 \t1 \t1 \forall p :person| p \in dom(imprestRemind') @ p \in dom(family') \land\\
+\t1 \t1 \t1 \forall p :person| p \in dom(costs') @ p \in dom(family') \land\\
+\t1 \t1 \t1 \forall p:Payment | p \in range(payments') @ \\
+\t1 \t1 \t1 \t1 p.payer \in dom(famil'y) \land p.payee \in dom(family')\\
+\t1 \t1 \t1 \forall c:Cost | c \in dom(costId') @ \exists p:Person @ c \in costs'(p)]\\
+\t1 \t1 \t1 \t1 \t1 \t1 \t1  \t1 [one-point~rule,~ 5~times]\\
+\t1 \iff [family? : Family]
+
+\end{zed}
+
+\subsection*{ه}
+
+\begin{schema}{AddCost_0}
+\Delta FamilyPayment\\
+cost? : Cost\\
+pe : Person\\
+py : Payment\\
+v : \nat\\
+i : id\\
+i0: id
+\where
+i = cost?.imprestId\\
+payments(i).payMode = imprest\\
+i \in dom(imprestRemind)\\
+py = payments~~(i)\\
+v = ((imprestRemind~~pe)~~py)\\
+cost?.costValue \le v\\
+pe = py.payee\\
+family' = family\\
+costs' = costs \oplus \{~pe \mapsto costs~~pe \cup \{cost?\}~\}\\
+((imprestRemind'~~pe)~~py) = v - cost?.costValue\\
+(py.paymentDate.1 <cost?.costDate.year) \lor (py.paymentDate.1  = cost?.costDate.year \land \\
+\t1 py.paymentDate.2 < cost?.costDate.mounth) \lor\\
+\t1(py.paymentDate.1  = cost?.costDate.year \land\\
+\t1 \t1 py.paymentDate.2 = cost?.costDate.mounth\land\\
+\t1 \t1 \t1 py.paymentDate.3 \le cost?.costDate.day)\\
+\exists x:usage @ x = cost?.costUsage\\
+\exists t:id | t \notin dom(costsId)@ i0=t\\
+costsId' = CostsId \cup \{i0 \mapsto cost?\}
+\end{schema}
+
+\begin{schema}{AddPayment_0}
+\Delta FamilyPayment\\
+payment? : Payment\\
+p1 : Person\\
+p2 : Person\\
+i : id\\
+v : \nat
+\where
+family' = family\\
+costs' = costs\\
+v = payment?.paymentvalue\\
+p1 = payment?.payer\\
+p2 = payment?.payee\\
+p1 \in dom(family)\\
+p2 \in dom(family)\\
+p1 \neq p2\\
+\exists t:id | t \notin dom(payments)@ i=t\\
+payments' = payments \cup \{i \mapsto payment?\}\\
+payment?.payMode = imprest \implies imprestRemind' = imprestRemind \oplus \\
+\t1 \{p2 \mapsto imprestRemind~~p2 \cup \{(payment? \mapsto v)\} \}\\
+payment?.payMode \neq imprest \implies imprestRemind' = imprestRemind\\
+\exists x:payModel @ x = payment?.payMode\\
+\exists x:Date @ x.year = payment?.paymentDate.1 \land x.mounth = payment?.paymentDate.2 \land\\
+\t1 \t1 x.day = payment?.paymentDate.3
+\end{schema}
+
+\begin{schema}{Success}
+\Xi FamilyPayment\\
+o! : message
+\where
+o! = OK
+\end{schema}
+
+\begin{schema}{PersonNotMember}
+\Xi FamilyPayment\\
+payment? : Payment\\
+o! : message
+\where
+p1 = payment?.payer\\
+p2 = payment?.payee\\
+p1 \notin dom(family) \lor p2 \notin dom(family)\\
+o! = ‫‪Person‬‬_‫‪Not‬‬_‫‪Member‬‬
+\end{schema}
+
+\begin{schema}{PaymentNotFound}
+\Xi FamilyPayment\\
+cost? : Cost\\
+o! : message\\
+i : id
+\where
+i = cost?.imprestId\\
+i \notin dom(payments)\\
+o! = ‫‪Payment‬‬_‫‪Not‬‬_‫‪Found
+\end{schema}
+
+
+
+\begin{schema}{ImprestNotBalance}
+\Xi FamilyPayment\\
+cost? : Cost\\
+o! : message\\
+v : \nat
+\where
+v=payments(cost?.imprestId).paymentValue\\
+v < cost?.costValue\\
+o! = Imprest_Not_Balance
+\end{schema}
+
+\begin{schema}{CostNotFound}
+\Xi FamilyPayment\\
+cost? : Cost\\
+o! : message
+\where
+\lnot(\exists i: id @ costId~~i = cost?)\\
+o! = Cost_Not_Found
+\end{schema}
+
+\begin{schema}{DateNotValid}
+\Xi FamilyPayment\\
+payment? : Payment\\
+o! : message
+\where
+\lnot (\exists x:Date @ x.year = payment?.paymentDate.1 \land x.mounth = payment?.paymentDate.2 \land\\
+\t1 \t1 x.day = payment?.paymentDate.3)\\
+o! = DateNotValid
+\end{schema}
+
+\begin{schema}{DateNotMatch}
+\Xi FamilyPayment\\
+cost? : Cost\\
+py : Payment\\
+o! : message
+\where
+py = payments~~(cost?.imprestId)\\
+\lnot((py.paymentDate.1 <cost?.costDate.year) \lor (py.paymentDate.1  = cost?.costDate.year \land \\
+\t1 py.paymentDate.2 < cost?.costDate.mounth) \lor\\
+\t1(py.paymentDate.1  = cost?.costDate.year \land\\
+\t1 \t1 py.paymentDate.2 = cost?.costDate.mounth\land\\
+\t1 \t1 \t1 py.paymentDate.3 \le cost?.costDate.day))\\
+o! = DateNotMatch
+\end{schema}
+
+\begin{zed}
+AddCost == (AddCost_0 \land Success) \lor PaymentNotFound \lor \\
+\t1 \t1 ImprestNotBalance \lor CostNotFound \lor DateNotMatch
+\end{zed}
+
+
+
+\begin{zed}
+AddPayment == (AddPayment_0 \land Success) \lor PersonNotMember \lor DateNotValid
+\end{zed}
+
+\begin{schema}{ListOfCost}
+\Xi FamilyPayment\\
+d1? :Date\\
+d2? :Date\\
+o! : person \fun \power~~Cost
+\where
+\forall p:Person  | p \in dom(costs) \land p \in dom(o!) @ \\
+\t1 \forall c:Cost | c \in costs(p) \land c \in o!(p) @ (c.costDate.year>d1?.year \lor\\
+\t1 (c.costDate.year=d1?.year \land c.costDate.mounth>d1?.mounth) \lor\\
+\t1 (c.costDate.year=d1?.year \land c.costDate.mounth=d1?.mounth \land c.costDate.day\ge d1?.day))\land\\
+\t1 (c.costDate.year<d2?.year\lor (c.costDate.year=d2?.year \land c.costDate.mounth<d2?.mounth) \lor\\
+\t1 (c.costDate.year=d2?.year \land c.costDate.mounth=d2?.mounth \land c.costDate.day\le d2?.day))
+
+\end{schema}
+
+\begin{schema}{ListOfPayment}
+\Xi FamilyPayment\\
+d1? :Date\\
+d2? :Date\\
+o! : person \fun \power~~Payment
+\where
+\forall p:Person | p \in dom(costs) @ \forall y:Peyment | y \in range(payments) \land y \in o!(p) \land y.payer = p @\\
+\t1 (y.paymentDate.1>d1.year \lor (y.paymentDate.1=d1.year \land y.paymentDate.2>d1.mounth) \lor\\
+\t1 (y.paymentDate.1=d1.year \land y.paymentDate.2=d1.mounth \land y.paymentDate.3\ge d1.day))\land\\
+\t1 (y.paymentDate.1<d2.year\lor (y.paymentDate.1=d2.year \land y.paymentDate.2<d2.mounth) \lor\\
+\t1 (y.paymentDate.1=d2.year \land y.paymentDate.2=d2.mounth \land y.paymentDate.3\le d2.day))
+
+\end{schema}
+
+\section*{سوال ۳}
+
+\begin{schema}{CostL}
+costValue : \nat\\
+costDate : Date\\
+costUsage : usage\\
+imprestId : id
+\where
+costValue >0
+\end{schema}
+
+
+\begin{schema}{FamilyPaymenG}
+family : Family\\
+costs : person \fun \power~CostL\\
+payments : id \bij Payment\\
+costId : id \bij CostL\\ 
+imprestRemind : person \fun (Payment \rel \nat)
+\where
+\forall p : payment | p \in dom(range(imprestRemind))@ p\in range(payments) \land p.payMode = imprest\\
+\forall p :person| p \in dom(imprestRemind) @ p \in dom(family)\\
+\forall p :person| p \in dom(costs) @ p \in dom(family)\\
+\forall p:Payment | p \in range(payments) @ p.payer \in dom(family) \land p.payee \in dom(family)\\
+\forall c:CostL | c \in range(costId) @ \exists p:Person @ c \in costs(p)
+\end{schema}
+
+\begin{schema}{Promotion}
+\Delta FamilyPaymentG\\
+\Delta CostL\\
+p? : Person\\
+i : id
+\where
+family = family'\\
+p? \in dom(family)\\
+i \in dom(costID)\\
+p? \in dom(costs)\\
+costId~~i = \Theta Cost\\
+costId'~~i = \Theta Cost'\\
+\Theta Cost \in costs~~p?\\
+\Theta Cost' \in costs'~~p?\\
+payments = payments'\\
+\{p?\} \ndres costs = \{p?\} \ndres costs'\\
+\{i\} \ndres costId = \{i\} \ndres costId'\\
+imprestRemind = imprestRemind'\\
+p? \in dom(imprestRemind)
+\end{schema}
+
+\begin{schema}{addcost_0L}
+\Delta Cost\\
+c? : CostL
+\where
+paymentValue' = c?.paymentValue\\
+payer' = c?.payer\\
+payee' = c?.payee\\
+paymentDate' = c?.paymentDate\\
+imprestId' = c?.imprestId
+\end{schema}
+
+\begin{zed}
+addCost_0G == \exists \Delta CostL @ addCost_0L \land Promotion
+\end{zed}
+
+\begin{schema}{Success}
+o! : message
+\where
+o! = OK
+\end{schema}
+
+\begin{schema}{PaymentNotFoundG}
+\Xi FamilyPaymentG\\
+cost? : CostL\\
+o! : message\\
+i : id
+\where
+i = cost?.imprestId\\
+i \notin dom(payments)\\
+o! = ‫‪Payment‬‬_‫‪Not‬‬_‫‪Found
+\end{schema}
+
+
+\begin{schema}{ImprestNotBalanceG}
+\Xi FamilyPaymentG\\
+cost? : CostL\\
+o! : message\\
+v : \nat
+\where
+v=payments(cost?.imprestId).paymentValue\\
+v < cost?.costValue\\
+o! = Imprest_Not_Balance
+\end{schema}
+
+\begin{schema}{CostNotFoundG}
+\Xi FamilyPaymentG\\
+cost? : CostL\\
+o! : message
+\where
+\lnot(\exists i: id @ costId~~i = cost?)\\
+o! = Cost_Not_Found
+\end{schema}
+
+\begin{schema}{DateNotMatchG}
+\Xi FamilyPaymentG\\
+cost? : CostL\\
+py : Payment\\
+o! : message
+\where
+py = payments~~(cost?.imprestId)\\
+\lnot((py.paymentDate.1 <cost?.costDate.year) \lor (py.paymentDate.1  = cost?.costDate.year \land \\
+\t1 py.paymentDate.2 < cost?.costDate.mounth) \lor\\
+\t1(py.paymentDate.1  = cost?.costDate.year \land\\
+\t1 \t1 py.paymentDate.2 = cost?.costDate.mounth\land\\
+\t1 \t1 \t1 py.paymentDate.3 \le cost?.costDate.day))\\
+o! = DateNotMatch
+\end{schema}
+
+\begin{schema}{ListOfCostL}
+\Xi CostL\\
+d1? :Date\\
+d2? :Date\\
+o! : CostL
+\where
+o!.costValue = costValue\\
+o!costDate = costDate\\
+o!.costUsage = costUsage\\
+o!.imprestId = imprestId\\
+(costDate.year>d1?.year \lor (costDate.year=d1?.year \land costDate.mounth>d1?.mounth) \lor\\
+\t1 (costDate.year=d1?.year \land costDate.mounth=d1?.mounth \land costDate.day\ge d1?.day))\\
+(costDate.year<d2?.year\lor (costDate.year=d2?.year \land costDate.mounth<d2?.mounth) \lor\\
+\t1 (costDate.year=d2?.year \land costDate.mounth=d2?.mounth \land costDate.day\le d2?.day))
+\end{schema}
+
+\begin{zed}
+ListOfCostLG == \exists \Delta CostL @ ListOfCostL \land Promotion
+\end{zed}
+
+\begin{zed}
+AddCostG == (AddCost_0G \land Success) \lor PaymentNotFoundG \lor \\
+\t1 \t1 ImprestNotBalanceG \lor CostNotFoundG \lor DateNotMatchG
+\end{zed}
+
+
+
+\end{document}
+
